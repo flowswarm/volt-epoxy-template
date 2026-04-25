@@ -70,7 +70,7 @@ export const Navbar = () => {
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: 8 }}
                                         transition={{ duration: 0.15 }}
-                                        className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-white border border-black/5 shadow-xl"
+                                        className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-white text-volt-black border border-black/5 shadow-xl rounded-lg overflow-hidden"
                                     >
                                         {services.map((s) => (
                                             <Link
@@ -99,7 +99,7 @@ export const Navbar = () => {
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: 8 }}
                                         transition={{ duration: 0.15 }}
-                                        className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white border border-black/5 shadow-xl"
+                                        className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white text-volt-black border border-black/5 shadow-xl rounded-lg overflow-hidden"
                                     >
                                         {colorCharts.map((c) => (
                                             <a

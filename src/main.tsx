@@ -9,12 +9,14 @@ function ScrollToHash() {
 
   useEffect(() => {
     if (hash) {
+      // Smooth scroll to anchor
       setTimeout(() => {
         const el = document.querySelector(hash);
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Instant jump to top on page change — no choppy smooth scroll
+      window.scrollTo(0, 0);
     }
   }, [pathname, hash]);
 
