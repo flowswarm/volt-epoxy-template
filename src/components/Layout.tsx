@@ -46,7 +46,7 @@ export const Navbar = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-20">
                     <Link to="/" className="flex items-center">
-                        <img src="/Logo.png" alt="First State Epoxy and Flooring" className={`h-14 object-contain transition-all duration-300 ${scrolled ? '' : 'brightness-0 invert'}`} />
+                        <img src="/Logo.png" alt="First State Epoxy and Flooring" className="h-14 object-contain" />
                     </Link>
 
                     {/* Desktop Nav */}
@@ -228,7 +228,7 @@ export const Footer = () => {
             <div className="max-w-7xl mx-auto px-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 mb-12 md:mb-24">
                     <div className="col-span-1">
-                        <img src="/Logo.png" alt="First State Epoxy" className="h-16 object-contain mb-6 brightness-0 invert" />
+                        <img src="/Logo.png" alt="First State Epoxy" className="h-16 object-contain mb-6" />
                         <p className="text-sm font-bold uppercase tracking-widest opacity-60">
                             Quality Epoxy & Concrete Flooring<br />Serving Delaware & Surrounding Areas
                         </p>
