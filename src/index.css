@@ -3,25 +3,210 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Space Grotesk", sans-serif;
+  --font-display-wide: "Bebas Neue", "Arial Narrow", sans-serif;
   
   --color-volt-lime: #DFFF00;
+  --color-volt-lime-dim: #1a1f00;
   --color-volt-black: #0A0A0A;
-  --color-volt-gray: #F5F5F3;
+  --color-volt-charcoal: #111111;
+  --color-volt-gray: #F7F7F5;
+  --color-volt-cream: #FAF9F6;
   --color-volt-dark-gray: #1A1A1A;
 }
 
 @layer base {
+  html {
+    @apply overflow-x-hidden;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  
   body {
-    @apply bg-white text-volt-black font-sans antialiased;
+    @apply bg-white text-volt-black font-sans antialiased overflow-x-hidden;
   }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-bold uppercase tracking-tighter;
   }
+
+  *:focus-visible {
+    @apply outline-none ring-2 ring-volt-lime ring-offset-2 transition-shadow;
+  }
+
+  ::selection {
+    background: #DFFF00;
+    color: #0A0A0A;
+  }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATION KEYFRAMES — Performance-first (GPU-accelerated)
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes reveal-left {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes reveal-right {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes text-mask-reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+@keyframes draw-line {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes subtle-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(223, 255, 0, 0.4); }
+  50%      { box-shadow: 0 0 0 8px rgba(223, 255, 0, 0); }
+}
+
+@keyframes bounce-in {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes scroll-hint {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50%      { transform: translateY(8px); opacity: 0.4; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILITY CLASSES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Glass card — premium glassmorphism */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, #DFFF00, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-lime {
+  background: linear-gradient(135deg, #DFFF00, #b8d400);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Shimmer button effect */
+.shimmer-btn {
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Hover lift — smooth 3D lift */
+.hover-lift {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Marquee animation */
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-subtle-pulse {
+  animation: subtle-pulse 2s ease-in-out infinite;
+}
+
+.animate-scroll-hint {
+  animation: scroll-hint 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Noise texture overlay (lightweight CSS-only) */
+.noise-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Hide scrollbar */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Torn paper effects (legacy) */
 .torn-paper-edge {
-  mask-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Placeholder for texture */
+  mask-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
   position: relative;
 }
 
@@ -30,5 +215,10 @@
 }
 
 .torn-paper-top {
-  clip-path: polygon(0 10%, 5 2%, 10 8%, 15 5%, 20 10%, 25 2%, 30 8%, 35 5%, 40 10%, 45 2%, 50 8%, 55 5%, 60 10%, 65 2%, 70 8%, 75 5%, 80 10%, 85 2%, 90 8%, 95 5%, 100 10%, 100 100%, 0 100%);
+  clip-path: polygon(0 10%, 5% 2%, 10% 8%, 15% 5%, 20% 10%, 25% 2%, 30% 8%, 35% 5%, 40% 10%, 45% 2%, 50% 8%, 55% 5%, 60% 10%, 65% 2%, 70% 8%, 75% 5%, 80% 10%, 85% 2%, 90% 8%, 95% 5%, 100% 10%, 100% 100%, 0 100%);
+}
+
+/* Easing tokens */
+.ease-out-expo {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
